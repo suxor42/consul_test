@@ -1,0 +1,32 @@
+version: '2.1'
+services:
+  consul:
+    image: consul
+    ports:
+      - "53:8600/udp"
+      - "80:8500"
+    expose:
+      - "8300"
+      - "8400"
+      - "8500"
+      - "8600"
+      - "8600/udp"
+      - "8301"
+      - "8301/udp"
+      - "8302"
+      - "8302/udp"
+    environment:
+      CONSUL_BIND_INTERFACE: "eth0"
+      CONSUL_CLIENT_INTERFACE: "eth0"
+  webserver:
+    build:
+      context: .
+    expose:
+      - "8000"
+    command: python server.py
+    environment:
+      CONSUL_HOST: consul
+    links:
+      - consul
+    depends_on:
+      - consul
