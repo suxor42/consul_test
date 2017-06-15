@@ -12,6 +12,7 @@ import uuid
 
 CONSULHOST = os.environ.get('CONSUL_HOST')
 
+# Get the real public ip address
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 s.connect((CONSULHOST, 1))  # connect() for UDP doesn't send packets
 local_ip_address = s.getsockname()[0]
